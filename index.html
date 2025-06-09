@@ -1,0 +1,96 @@
+<!-- ✅ index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sravani Foods</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Sravani Foods</h1>
+    <h2>PERUPALEM</h2>
+    <div class="auth-buttons">
+      <button onclick="login()">Login</button>
+      <button onclick="openRegisterForm()">Register</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <section class="menu-items">
+      <div class="item">
+        <img src="Images/friderice.webp" alt="Fried Rice">
+        <p>Fried Rice</p>
+        <p>Price: ₹90/-</p>
+        <button onclick="openOrderForm('Fried Rice')">Order</button>
+      </div>
+      <div class="item">
+        <img src="Images/biryani.webp">
+        <p>Biryani</p>
+        <p>Price: ₹100/-</p>
+        <button onclick="openOrderForm('Biryani')">Order</button>
+      </div>
+      <div class="item">
+        <img src="Images/noodles.webp" alt="Noodles">
+        <p>Noodles</p>
+        <p>Price: ₹90/-</p>
+        <button onclick="openOrderForm('Noodles')">Order</button>
+      </div>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 Sravani Foods, Peruvalem. All rights reserved.</p>
+    <p>Licensed under Local Food & Business Authority, India.</p>
+    <p>Address: Main Road, Perupalem, Andhra Pradesh, India - 534280</p>
+    <p>Contact: +91-9550988872 | Email: sravani.foods@email.com</p>
+    <p>For any Querys Please contact <a href="mailto:shalemrajubiraja7@gmail.com" class="email-link">@Shalem_Devloper</a></p>
+  </footer>
+
+  <!-- Order Form -->
+  <div class="order-modal" id="orderModal">
+    <div class="order-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2>Place Your Order</h2>
+      <form>
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="item">Food Item:</label>
+        <input type="text" id="item" readonly>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" min="1" value="1">
+
+        <label for="address">Delivery Address:</label>
+        <textarea id="address" required></textarea>
+
+        <button type="submit">Confirm Order</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="register-modal" id="registerModal">
+    <div class="register-content">
+      <span class="close-btn" onclick="closeRegisterForm()">&times;</span>
+      <h2>Register</h2>
+      <form id="registerForm">
+        <label for="reg-username">Username:</label>
+        <input type="text" id="reg-username" name="username" required>
+
+        <label for="reg-email">Email:</label>
+        <input type="email" id="reg-email" name="email" required>
+
+        <label for="reg-password">Password:</label>
+        <input type="password" id="reg-password" name="password" required>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
