@@ -1,6 +1,3 @@
-// connect.js
-const mysql = require('mysql2');
-require('dotenv').config(); // Load local .env in development
 
 // connect.js
 const mysql = require('mysql2');
