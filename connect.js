@@ -1,27 +1,19 @@
-// connect.js
-const mysql = require('mysql2');
+const { Pool } = require('pg');
 require('dotenv').config();
 
-// Parse the DATABASE_URL
-const dbUrl = new URL(process.env.DATABASE_URL);
-
-const connection = mysql.createConnection({
-  host: dbUrl.hostname,
-  port: dbUrl.port,
-  user: dbUrl.username,
-  password: dbUrl.password,
-  database: dbUrl.pathname.replace('/', '') // removes the "/" before db name
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
-connection.connect((err) => {
+pool.connect((err) => {
   if (err) {
-    console.error('❌ MySQL connection failed:', err);
+    console.error('❌ PostgreSQL connection failed:', err);
   } else {
-    console.log('✅ MySQL Connected!');
+    console.log('✅ PostgreSQL Connected!');
   }
 });
 
-module.exports = connection;
-
-
-
+module.exports = pool;
