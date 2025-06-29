@@ -1,5 +1,9 @@
 function login() {
-  alert("First complete the registration process!");
+  document.getElementById('loginModal').style.display = 'flex';
+}
+
+function closeLoginForm() {
+  document.getElementById('loginModal').style.display = 'none';
 }
 
 function openOrderForm(itemName) {
@@ -19,11 +23,12 @@ function closeRegisterForm() {
   document.getElementById('registerModal').style.display = 'none';
 }
 
-// ✅ Registration form handling
+// ✅ Form Handling
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('registerForm');
+  // Register form handling
+  const registerForm = document.getElementById('registerForm');
 
-  form.addEventListener('submit', async (e) => {
+  registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const username = document.getElementById('reg-username').value;
@@ -36,21 +41,47 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({
-          username,
-          email,
-          password
-        })
+        body: new URLSearchParams({ username, email, password })
       });
 
       const message = await response.text();
-
-      alert(message); // ✅ success popup
-      form.reset();
+      alert(message);
+      registerForm.reset();
       closeRegisterForm();
     } catch (error) {
       console.error('Registration failed:', error);
       alert('❌ Registration failed. Try again later.');
+    }
+  });
+
+  // Login form handling
+  const loginForm = document.getElementById('loginForm');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({ email, password })
+      });
+
+      const result = await response.text();
+      alert(result);
+
+      if (result.includes('success')) {
+        closeLoginForm();
+      }
+
+    } catch (err) {
+      console.error('Login failed:', err);
+      alert('❌ Login failed. Please try again.');
     }
   });
 });
