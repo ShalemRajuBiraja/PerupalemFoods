@@ -23,9 +23,8 @@ function closeRegisterForm() {
   document.getElementById('registerModal').style.display = 'none';
 }
 
-// ✅ Form Handling
 document.addEventListener('DOMContentLoaded', () => {
-  // Register form handling
+  // ✅ Registration form handling
   const registerForm = document.getElementById('registerForm');
 
   registerForm.addEventListener('submit', async (e) => {
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Login form handling
+  // ✅ Login form handling
   const loginForm = document.getElementById('loginForm');
 
   loginForm.addEventListener('submit', async (e) => {
@@ -83,5 +82,27 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Login failed:', err);
       alert('❌ Login failed. Please try again.');
     }
+  });
+
+  // ✅ Order form handling
+  const orderForm = document.getElementById('orderForm');
+
+  orderForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const item = document.getElementById('item').value;
+    const quantity = document.getElementById('quantity').value;
+    const address = document.getElementById('address').value;
+    const payment = document.getElementById('payment').value;
+
+    if (!name || !item || !quantity || !address || !payment) {
+      alert('❌ Please fill in all the fields.');
+      return;
+    }
+
+    alert(`🎉 Order placed successfully!\n\nItem: ${item}\nQuantity: ${quantity}\nPayment: ${payment}\n\nWe’ll deliver it soon!`);
+    orderForm.reset();
+    closeModal();
   });
 });

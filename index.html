@@ -113,6 +113,38 @@
   </div>
 </div>
 
+
+<!-- Order Form -->
+<div class="order-modal" id="orderModal">
+  <div class="order-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h2>Place Your Order</h2>
+    <form id="orderForm">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="item">Food Item:</label>
+      <input type="text" id="item" readonly>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" min="1" value="1">
+
+      <label for="address">Delivery Address:</label>
+      <textarea id="address" required></textarea>
+
+      <label for="payment">Select Payment Method:</label>
+      <select id="payment" required>
+        <option value="" disabled selected>Select a payment method</option>
+        <option value="Cash on Delivery">Cash on Delivery</option>
+        <option value="UPI">Select UPI</option>
+      </select>
+
+      <button type="submit">Confirm Order</button>
+    </form>
+  </div>
+</div>
+
+
   <script src="script.js"></script>
 </body>
 </html>
