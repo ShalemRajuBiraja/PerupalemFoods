@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const connection = require('./connect'); // PostgreSQL pool
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,10 +9,9 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
-// ✅ Register Route
+// Register Route
 app.post('/register', (req, res) => {
   const { username, email, password } = req.body;
-
   const sql = 'INSERT INTO users (username, email, password) VALUES ($1, $2, $3)';
   connection.query(sql, [username, email, password], (err) => {
     if (err) {
@@ -23,7 +23,7 @@ app.post('/register', (req, res) => {
   });
 });
 
-// ✅ Login Route
+// Login Route
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
   const sql = 'SELECT * FROM users WHERE email = $1 AND password = $2';
@@ -40,6 +40,39 @@ app.post('/login', (req, res) => {
     } else {
       res.send('❌ Invalid credentials.');
     }
+  });
+});
+
+// ✅ Save Order Route
+app.post('/order', (req, res) => {
+  const { username, item, quantity, address, payment } = req.body;
+  const sql = 'INSERT INTO orders (username, item, quantity, address, payment) VALUES ($1, $2, $3, $4, $5)';
+  connection.query(sql, [username, item, quantity, address, payment], (err) => {
+    if (err) {
+      console.error('❌ Order saving failed:', err);
+      return res.status(500).send('❌ Could not place order.');
+    }
+    console.log('✅ Order placed for:', username);
+    res.send('✅ Order placed successfully!');
+  });
+});
+
+// ✅ Serve Dashboard Page
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dashboard.html'));
+});
+
+// ✅ Get Orders by Username
+app.get('/api/orders', (req, res) => {
+  const username = req.query.username;
+  const sql = 'SELECT * FROM orders WHERE username = $1 ORDER BY order_time DESC';
+
+  connection.query(sql, [username], (err, result) => {
+    if (err) {
+      console.error('❌ Failed to fetch orders:', err);
+      return res.status(500).send('❌ Failed to load orders.');
+    }
+    res.json(result.rows);
   });
 });
 

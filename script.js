@@ -85,24 +85,44 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ✅ Order form handling
-  const orderForm = document.getElementById('orderForm');
+ // ✅ Order form handling
+const orderForm = document.getElementById('orderForm');
 
-  orderForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+orderForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const name = document.getElementById('name').value;
-    const item = document.getElementById('item').value;
-    const quantity = document.getElementById('quantity').value;
-    const address = document.getElementById('address').value;
-    const payment = document.getElementById('payment').value;
+  const name = document.getElementById('name').value;
+  const item = document.getElementById('item').value;
+  const quantity = document.getElementById('quantity').value;
+  const address = document.getElementById('address').value;
+  const payment = document.getElementById('payment').value;
 
-    if (!name || !item || !quantity || !address || !payment) {
-      alert('❌ Please fill in all the fields.');
-      return;
-    }
+  if (!name || !item || !quantity || !address || !payment) {
+    alert('❌ Please fill in all the fields.');
+    return;
+  }
 
-    alert(`🎉 Order placed successfully!\n\nItem: ${item}\nQuantity: ${quantity}\nPayment: ${payment}\n\nWe’ll deliver it soon!`);
+  try {
+    const response = await fetch('/order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        username: name,
+        item,
+        quantity,
+        address,
+        payment
+      })
+    });
+
+    const message = await response.text();
+    alert(message);
     orderForm.reset();
     closeModal();
-  });
+  } catch (err) {
+    console.error('Order failed:', err);
+    alert('❌ Order could not be placed.');
+  }
 });
