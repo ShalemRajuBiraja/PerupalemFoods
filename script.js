@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
   body: new URLSearchParams({
     username: name,
     item: item,
-    qty: quantity,
+    quantity: quantity,
     address: address,
     payment: payment
   })
