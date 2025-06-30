@@ -105,9 +105,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // alert(Order placed successfully!\n\nItem: ${item}\nQuantity: ${quantity}\nPayment: ${payment}\n\nWe’ll deliver it soon!);
     // orderForm.reset();
     // closeModal();
-    alert(`Order placed successfully!\n\nItem: ${item}\nQuantity: ${quantity}\nPayment: ${payment}\n\nWe’ll deliver it soon!`);
-orderForm.reset();
-closeModal();
+   fetch('/order', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: new URLSearchParams({
+    username: name,
+    item: item,
+    qty: quantity,
+    address: address,
+    payment: payment
+  })
+})
+.then(response => response.text())
+.then(message => {
+  alert(message);
+  orderForm.reset();
+  closeModal();
+})
+.catch(err => {
+  console.error('❌ Order failed:', err);
+  alert('❌ Could not place order. Try again later.');
+});
 
   });
 });
