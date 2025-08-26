@@ -65,7 +65,7 @@ app.get('/dashboard', (req, res) => {
 // ✅ Get Orders by Username
 // ✅ Get All Orders
 app.get('/api/orders', (req, res) => {
-  const sql = 'SELECT * FROM orders ORDER BY time DESC';
+  const sql = 'SELECT * FROM orders ORDER BY order_time DESC';
 
   connection.query(sql, (err, result) => {
     if (err) {
