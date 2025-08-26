@@ -1,19 +1,17 @@
-const { Pool } = require('pg');
-require('dotenv').config();
+const { Pool } = require("pg");
+require("dotenv").config();
 
+// Create Pool
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // required for external DB (Render/Heroku/etc.)
   },
 });
 
-pool.connect((err) => {
-  if (err) {
-    console.error('❌ PostgreSQL connection failed:', err);
-  } else {
-    console.log('✅ PostgreSQL Connected!');
-  }
-});
+// Test connection
+pool.connect()
+  .then(() => console.log("✅ PostgreSQL Connected!"))
+  .catch((err) => console.error("❌ PostgreSQL connection failed:", err));
 
 module.exports = pool;
