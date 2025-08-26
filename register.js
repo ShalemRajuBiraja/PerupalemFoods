@@ -63,11 +63,11 @@ app.get('/dashboard', (req, res) => {
 });
 
 // ✅ Get Orders by Username
+// ✅ Get All Orders
 app.get('/api/orders', (req, res) => {
-  const username = req.query.username;
-  const sql = 'SELECT * FROM orders WHERE username = $1 ORDER BY order_time DESC';
+  const sql = 'SELECT * FROM orders ORDER BY time DESC';
 
-  connection.query(sql, [username], (err, result) => {
+  connection.query(sql, (err, result) => {
     if (err) {
       console.error('❌ Failed to fetch orders:', err);
       return res.status(500).send('❌ Failed to load orders.');
@@ -75,6 +75,7 @@ app.get('/api/orders', (req, res) => {
     res.json(result.rows);
   });
 });
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
