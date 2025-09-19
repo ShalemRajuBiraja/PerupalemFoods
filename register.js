@@ -63,6 +63,18 @@ app.get('/dashboard', (req, res) => {
 });
 
 // ✅ Get Orders by Username
+// ✅ Get Orders for a Specific User
+app.get('/api/orders/:username', (req, res) => {
+  const username = req.params.username;
+  const sql = 'SELECT * FROM orders WHERE username = $1 ORDER BY order_time DESC';
+  connection.query(sql, [username], (err, result) => {
+    if (err) {
+      console.error('❌ Failed to fetch user orders:', err);
+      return res.status(500).send('❌ Failed to load user orders.');
+    }
+    res.json(result.rows);
+  });
+});
 // ✅ Get All Orders
 app.get('/api/orders', (req, res) => {
   const sql = 'SELECT * FROM orders ORDER BY order_time DESC';

@@ -60,10 +60,10 @@
   <button id="logoutBtn" onclick="window.location.href='index.html'">Logout</button>
 
   <script>
-    // Dummy username for example - replace with session-based username if needed
+    // Prompt for username and fetch only that user's orders
     const username = prompt("Enter your username to load orders:");
 
-    fetch(`/api/orders?username=${username}`)
+    fetch(`/api/orders/${username}`)
       .then(res => res.json())
       .then(orders => {
         const tbody = document.getElementById("ordersBody");
@@ -80,7 +80,7 @@
             <td>${order.quantity}</td>
             <td>${order.address}</td>
             <td>${order.payment}</td>
-            <td>${new Date(order.order_time).toLocaleString()}</td>
+            <td>${order.order_time ? new Date(order.order_time).toLocaleString() : ''}</td>
           `;
           tbody.appendChild(row);
         });
