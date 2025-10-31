@@ -59,37 +59,51 @@
 
   <button id="logoutBtn" onclick="window.location.href='index.html'">Logout</button>
 
-  <script>
-    // Prompt for username and fetch only that user's orders
-    const username = prompt("Enter your username to load orders:");
+<script>
+  // Ask for the username
+  const username = prompt("Enter your username to load orders:");
 
+  if (!username) {
+    alert("❌ Please enter your username to view orders.");
+  } else {
+    // Fetch orders from your Render backend
     fetch(`https://perupalem-foods.onrender.com/api/orders/${username}`)
-      .then(res => res.json())
-      .then(orders => {
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("❌ Server error while fetching orders.");
+        }
+        return res.json();
+      })
+      .then((orders) => {
+        console.log("✅ Orders received:", orders);
         const tbody = document.getElementById("ordersBody");
 
-        if (orders.length === 0) {
-          tbody.innerHTML = "<tr><td colspan='5'>No orders found.</td></tr>";
+        // If no orders found
+        if (!orders || orders.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='5'>No orders found for this user.</td></tr>";
           return;
         }
 
-        orders.forEach(order => {
+        // Display each order as a table row
+        orders.forEach((order) => {
           const row = document.createElement("tr");
           row.innerHTML = `
             <td>${order.item}</td>
             <td>${order.quantity}</td>
             <td>${order.address}</td>
             <td>${order.payment}</td>
-            <td>${order.order_time ? new Date(order.order_time).toLocaleString() : ''}</td>
+            <td>${order.order_time ? new Date(order.order_time).toLocaleString() : "—"}</td>
           `;
           tbody.appendChild(row);
         });
       })
-      .catch(err => {
-        console.error("Failed to load orders", err);
-        alert("❌ Could not load your orders.");
+      .catch((err) => {
+        console.error("❌ Error fetching orders:", err);
+        alert("❌ Could not load your orders. Please try again.");
       });
-  </script>
+  }
+</script>
+
 
 </body>
 </html>
