@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('reg-password').value;
 
     try {
-      const response = await fetch('/register', {
+      const response = await fetch('https://perupalem-foods.onrender.com/api/register',
+         {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('login-password').value;
 
     try {
-      const response = await fetch('/login', {
+      const response = await fetch('/https://perupalem-foods.onrender.com/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
