@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
-// Register Route
+//Register Route
 app.post('/register', (req, res) => {
   const { username, email, password } = req.body;
   const sql = 'INSERT INTO users (username, email, password) VALUES ($1, $2, $3)';
