@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('login-password').value;
 
     try {
-      const response = await fetch('/https://perupalem-foods.onrender.com/login', {
+      const response = await fetch('https://perupalem-foods.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
