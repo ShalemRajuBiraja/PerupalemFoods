@@ -63,7 +63,7 @@
     // Prompt for username and fetch only that user's orders
     const username = prompt("Enter your username to load orders:");
 
-    fetch(`/api/orders/${username}`)
+    fetch(`https://perupalem-foods.onrender.com/api/orders/${username}`)
       .then(res => res.json())
       .then(orders => {
         const tbody = document.getElementById("ordersBody");
